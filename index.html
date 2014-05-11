@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.mothersDayMessage {
+			position: absolute;
+			top: -90px;
+			text-align: center;
+			width:100%;
+			font-size: 40px;
+			font-family: Cooper Black;
+			z-index: 1000;
+		}
+
+		.flower {
+			width:0px;
+			height:0px;
+			position: absolute;
+		}
+	</style>
+</head>
+<body>
+	<p class="mothersDayMessage">Happy Mother's Day Mom!</p>
+
+	<script src="jquery.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			var $mothersDayMessage = $("p.mothersDayMessage"),
+				$body = $("body"),
+				docWidht = $(document).width(),
+				docHeight = $(document).height(),
+				colors = ['red',
+						  'blue',
+						  'yellow',
+						  'green'],
+				flowers = ['flower1.png',
+							'flower1.png',
+							'flower2.png',
+							'flower3.png',
+							'flower4.png',
+							'flower5.png',
+							'flower6.png',
+							'flower7.png',
+							'flower8.png'],
+				halfBodyHeight = $(document).height() / 2 - $mothersDayMessage.height();
+
+			$mothersDayMessage.animate({
+				"top": halfBodyHeight + "px"
+			}, 1500, function() {
+				popFlowers();
+				$("body").append('<iframe width="0" height="0" src="http://www.youtube.com/embed/fGyI2jCrg9c?autoplay=1" frameborder="0" allowfullscreen></iframe>');
+
+				setTimeout(function() {			
+					setInterval(function() {
+						$body.css("background", colors[getRandomInt(0, colors.length)]);
+					}, 110);
+				}, 2500);
+
+			});
+
+			function pxToInt(px) {
+				return parseInt(px.replace(/px/i, ""));
+			}
+
+			function getRandomInt(min, max) {
+				return Math.floor(Math.random() * (max - min) + min);
+			}
+
+			function getRandomFlower() {
+				return flowers[getRandomInt(0, flowers.length)]
+			}
+
+			function popFlowers() {
+				for (var i = 0; i < 300; i++) {
+					var flower = getRandomFlower(),
+						flowerId = "flower" + i,
+						heightWidth = getRandomInt(30, 100) + "px";
+
+					$("body").append("<img id='" + flowerId + "' class='flower' src='" + flower + "'></img>");
+
+					var $flower = $("#" + flowerId);
+						$flower.css({
+							left: getRandomInt(0, docWidht - $flower.width()) + "px",
+							top: getRandomInt(0, docHeight - $flower.height()) + "px"
+						})
+						.animate({
+							height: heightWidth,
+							width: heightWidth
+						}, getRandomInt(500, 5000));
+				}
+			}
+		});
+	</script>
+</body>
+</html>
